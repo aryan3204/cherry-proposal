@@ -3,160 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ready for Love? 💖</title>
+    <title>For You 💖</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --deep-red: #8B0000;
+            --deep-red-light: #A52A2A;
+            --deep-red-glow: rgba(139, 0, 0, 0.6);
+        }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f72585 0%, #b5179e 50%, #7209b7 100%); /* Cherry red theme */
+            font-family: 'Inter', sans-serif;
+            background: #000;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            color: #FFF;
             overflow: hidden;
-            color: white;
         }
-        .container {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 60px 40px;
-            border-radius: 25px;
-            box-shadow: 0 25px 50px rgba(247,37,133,0.4);
-            max-width: 500px;
-            animation: slideIn 1s ease-out;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse 60% 30% at 20% 70%, var(--deep-red-glow), transparent),
+                        radial-gradient(ellipse 50% 20% at 80% 30%, rgba(139,0,0,0.1), transparent);
+            z-index: -1;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .page { 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .page.active { opacity: 1; transform: translateY(0); }
+        .cover-page, .no-page { 
+            background: rgba(255,255,255,0.03); 
+            backdrop-filter: blur(25px); 
+            border: 1px solid var(--deep-red); 
+            border-radius: 28px; 
+            max-width: 800px; 
+            padding: 80px 60px; 
+        }
+        .proposal-page { 
+            display: flex; 
+            flex-direction: row; 
+            max-width: 1200px; 
+            height: 85vh; 
+            background: rgba(255,255,255,0.03); 
+            backdrop-filter: blur(25px); 
+            border: 1px solid var(--deep-red); 
+            border-radius: 28px; 
+            padding: 60px; 
+            gap: 80px; 
+            align-items: center; 
         }
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5em, 7vw, 5em);
+            background: linear-gradient(135deg, var(--deep-red), var(--deep-red-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+            line-height: 1.1;
         }
-        p {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            line-height: 1.5;
+        .heartfelt {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin: 32px 0;
+            opacity: 0.95;
+            font-style: italic;
+            max-width: 700px;
+        }
+        .romantic-word {
+            font-size: 1.6em;
+            color: var(--deep-red);
+            font-family: 'Playfair Display', serif;
+            margin: 24px 0;
+            font-weight: 400;
+        }
+        p { font-size: 1.25em; line-height: 1.7; margin-bottom: 40px; opacity: 0.95; }
+        .cover-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
         }
         .btn {
-            background: linear-gradient(45deg, #ff1493, #ff69b4);
-            color: white;
-            border: none;
-            padding: 18px 50px;
+            padding: 18px 40px;
             font-size: 1.2em;
             border-radius: 50px;
             cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(255,20,147,0.4);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+            border: none;
+            position: relative;
+            overflow: hidden;
         }
-        .btn:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255,20,147,0.6);
+        .enter-btn {
+            background: linear-gradient(135deg, var(--deep-red), var(--deep-red-light));
+            color: #FFF;
+            box-shadow: 0 15px 35px var(--deep-red-glow);
         }
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+        .no-btn {
+            background: transparent;
+            color: #FFF;
+            border: 2px solid var(--deep-red);
         }
-        .heart {
-            position: absolute;
-            font-size: 25px;
-            color: #ffb6c1;
-            animation: float 8s infinite linear;
+        .btn-yes { 
+            background: linear-gradient(135deg, var(--deep-red), var(--deep-red-light)); 
+            color: #FFF; 
+            box-shadow: 0 12px 30px var(--deep-red-glow); 
+            flex: 1; 
         }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        .btn-no { 
+            background: transparent; 
+            color: #FFF; 
+            border: 2px solid var(--deep-red); 
+            flex: 1; 
         }
-        .photo {
-            width: 250px;
-            height: 300px;
-            border-radius: 20px;
-            margin: 20px auto;
-            object-fit: cover;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border: 5px solid rgba(255,255,255,0.3);
+        .btn:hover { transform: translateY(-4px); }
+        .enter-btn:hover, .btn-yes:hover { box-shadow: 0 25px 50px var(--deep-red-glow); }
+        .no-btn:hover, .btn-no:hover { background: rgba(139,0,0,0.1); box-shadow: 0 15px 35px var(--deep-red-glow); }
+        .photo { 
+            width: 280px; height: 380px; 
+            border-radius: 24px; object-fit: cover; 
+            border: 3px solid var(--deep-red); 
+            box-shadow: 0 25px 50px var(--deep-red-glow); 
         }
-        .hidden { display: none; }
+        .btn-group { display: flex; gap: 20px; margin-top: 20px; }
+        .signature { font-size: 1.1em; opacity: 0.8; margin-top: 20px; font-style: italic; }
+        .subtitle { color: var(--deep-red); font-family: 'Playfair Display', serif; font-size: 1.6em; margin-bottom: 32px; font-weight: 400; }
+        .no-tease { color: var(--deep-red-light); font-size: 2em; font-family: 'Playfair Display', serif; margin: 20px 0; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .pulse { animation: pulse 2s infinite; }
+        @media (max-width: 768px) {
+            .proposal-page { flex-direction: column; padding: 40px 30px; gap: 40px; height: 95vh; }
+            .text-section { text-align: center; order: 2; }
+            .photo-section { order: 1; }
+            .btn-group, .cover-buttons { flex-direction: column; }
+            .heartfelt { font-size: 1.2em; }
+        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <!-- Page 1: Are you ready? -->
-    <div id="page1" class="container">
-        <div class="hearts" id="hearts1"></div>
-        <h1>💖 Are You Ready? 💖</h1>
-        <p>Sweetheart, I've something special for you today on Propose Day...</p>
-        <button class="btn" onclick="goToPage2()">Yes! 🥰</button>
-        <button class="btn" onclick="goToNoPage()">No 😏</button>
+    <!-- GOOGLE FORM - AUTO EMAILS YOU -->
+    <form id="responseForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfsN353tNrYsZSPIjG1_U0efj3O7iLYdeYs_OyyArLx73rkOw/formResponse" method="POST" style="display:none;">
+        <input type="text" name="entry.1937519174" id="answerInput" required>
+    </form>
+
+    <!-- COVER PAGE -->
+    <div id="coverPage" class="page active">
+        <div class="cover-page">
+            <h1 class="pulse">I Wish You Knew 💌</h1>
+            
+            <div class="heartfelt">
+                I wish you knew just how much our little talks and the time we spend together mean to me. You're literally my favorite person. Every moment with you feels like a gift, a piece of happiness I never want to let go of.
+            </div>
+            
+            <div class="heartfelt">
+                You bring light into my life in ways I can't even put into words. Just thinking about you makes my heart smile. Thank you for being you, and for sharing your world with me.
+            </div>
+            
+            <div class="romantic-word">I cherish you more than you'll ever know.</div>
+            
+            <p style="font-size: 1.1em; opacity: 0.8; margin-top: 40px;">Propose Day Surprise Inside ✨</p>
+            
+            <div class="cover-buttons">
+                <button class="btn enter-btn" onclick="showProposal()">Enter Surprise</button>
+                <button class="btn no-btn" onclick="showNoTease()">No thanks 😏</button>
+            </div>
+            
+            <p style="font-size: 1em; opacity: 0.7; margin-top: 32px;">— Aryan</p>
+        </div>
     </div>
 
-    <!-- Page 2: Proposal -->
-    <div id="page2" class="container hidden">
-        <div class="hearts" id="hearts2"></div>
-        <h1>Sanskriti, Will You Marry Me? 💍</h1>
-        <img src="https://images.unsplash.com/photo-1524504388940-b6b749e7148a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Her Photo" class="photo" id="herPhoto">
-        <p>Every <span style="color:#ffb6c1;font-weight:bold;">basorexia</span> moment makes me want to kiss you forever.<br>
-        With <span style="color:#ffb6c1;font-weight:bold;">cingulomania</span>, I dream of holding you always.<br>
-        Be mine eternally? From your Aryan ❤️</p>
-        <button class="btn" onclick="alert('YES! I love you forever! 🎉')">Yes Forever! 💕</button>
+    <!-- NO TEASE PAGE -->
+    <div id="noTeasePage" class="page hidden">
+        <div class="no-page">
+            <h1 class="pulse">fs your no is also a yes 🥰</h1>
+            <div class="no-tease">as you're stuck</div>
+            <p style="font-size: 1.4em; margin: 40px 0;">I know what's in your heart... 💖</p>
+            <button class="btn enter-btn" onclick="showProposal()" style="width: 300px;">
+                Surprise is waiting ✨
+            </button>
+            <p style="font-size: 1em; opacity: 0.7; margin-top: 32px;">— Aryan</p>
+        </div>
     </div>
 
-    <!-- No Page: Playful redirect -->
-    <div id="noPage" class="container hidden">
-        <h1>Your "No" is Also a "Yes" 🥰</h1>
-        <p>Because I know what's in your heart... 💖</p>
+    <!-- DEEP RED COFFEE DATE PROPOSAL -->
+    <div id="proposalPage" class="page hidden">
+        <div class="proposal-page">
+            <div class="text-section">
+                <h1>Will You Be<br>My Coffee Date<br>This 14th?</h1>
+                <p class="subtitle">The Real Surprise ☕💖</p>
+                <p>Every moment fills me with <span style="color:var(--deep-red);font-style:italic;font-size:1.3em;">basorexia</span>,<br>
+                endless <span style="color:var(--deep-red);font-style:italic;font-size:1.3em;">cingulomania</span>.</p>
+                <p>Be my coffee date this 14th?</p>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-yes" onclick="submitResponse('YES')">
+                        Yes Forever! ✨
+                    </button>
+                    <button type="button" class="btn btn-no" onclick="submitResponse('NO')">
+                        No for now 😊
+                    </button>
+                </div>
+                
+                <div class="signature">— Aryan</div>
+            </div>
+            <div class="photo-section">
+                <img src="HER_PHOTO_URL" alt="You" class="photo">
+            </div>
+        </div>
     </div>
 
     <script>
-        let heartsInterval;
-
-        function createHearts(containerId) {
-            const container = document.getElementById(containerId);
-            function heart() {
-                const h = document.createElement('div');
-                h.innerHTML = ['💖','❤️','💕','🩷'][Math.floor(Math.random()*4)];
-                h.className = 'heart';
-                h.style.left = Math.random() * 100 + '%';
-                h.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                container.appendChild(h);
-                setTimeout(() => h.remove(), 8000);
-            }
-            return setInterval(heart, 400);
+        function showPage(targetPage) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            document.getElementById(targetPage).classList.remove('hidden');
+            setTimeout(() => document.getElementById(targetPage).classList.add('active'), 100);
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-            document.getElementById(pageId).classList.remove('hidden');
+        function showProposal() {
+            showPage('proposalPage');
         }
 
-        function goToPage2() {
-            clearInterval(heartsInterval);
-            showPage('page2');
-            heartsInterval = createHearts('hearts2');
+        function showNoTease() {
+            showPage('noTeasePage');
         }
 
-        function goToNoPage() {
-            showPage('noPage');
-            setTimeout(() => {
-                goToPage2();
-            }, 2000);
+        function submitResponse(answer) {
+            document.getElementById('answerInput').value = answer;
+            document.getElementById('responseForm').submit();
         }
-
-        // Init
-        heartsInterval = createHearts('hearts1');
-        document.getElementById('herPhoto').src = 'her.jpg'; // Replace with her photo!
     </script>
 </body>
 </html>
