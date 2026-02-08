@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready for Love? 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f72585 0%, #b5179e 50%, #7209b7 100%); /* Cherry red theme */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(247,37,133,0.4);
+            max-width: 500px;
+            animation: slideIn 1s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(255,20,147,0.4);
+        }
+        .btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255,20,147,0.6);
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart {
+            position: absolute;
+            font-size: 25px;
+            color: #ffb6c1;
+            animation: float 8s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+        .photo {
+            width: 250px;
+            height: 300px;
+            border-radius: 20px;
+            margin: 20px auto;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 5px solid rgba(255,255,255,0.3);
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Are you ready? -->
+    <div id="page1" class="container">
+        <div class="hearts" id="hearts1"></div>
+        <h1>💖 Are You Ready? 💖</h1>
+        <p>Sweetheart, I've something special for you today on Propose Day...</p>
+        <button class="btn" onclick="goToPage2()">Yes! 🥰</button>
+        <button class="btn" onclick="goToNoPage()">No 😏</button>
+    </div>
+
+    <!-- Page 2: Proposal -->
+    <div id="page2" class="container hidden">
+        <div class="hearts" id="hearts2"></div>
+        <h1>Sanskriti, Will You Marry Me? 💍</h1>
+        <img src="https://images.unsplash.com/photo-1524504388940-b6b749e7148a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Her Photo" class="photo" id="herPhoto">
+        <p>Every <span style="color:#ffb6c1;font-weight:bold;">basorexia</span> moment makes me want to kiss you forever.<br>
+        With <span style="color:#ffb6c1;font-weight:bold;">cingulomania</span>, I dream of holding you always.<br>
+        Be mine eternally? From your Aryan ❤️</p>
+        <button class="btn" onclick="alert('YES! I love you forever! 🎉')">Yes Forever! 💕</button>
+    </div>
+
+    <!-- No Page: Playful redirect -->
+    <div id="noPage" class="container hidden">
+        <h1>Your "No" is Also a "Yes" 🥰</h1>
+        <p>Because I know what's in your heart... 💖</p>
+    </div>
+
+    <script>
+        let heartsInterval;
+
+        function createHearts(containerId) {
+            const container = document.getElementById(containerId);
+            function heart() {
+                const h = document.createElement('div');
+                h.innerHTML = ['💖','❤️','💕','🩷'][Math.floor(Math.random()*4)];
+                h.className = 'heart';
+                h.style.left = Math.random() * 100 + '%';
+                h.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(h);
+                setTimeout(() => h.remove(), 8000);
+            }
+            return setInterval(heart, 400);
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function goToPage2() {
+            clearInterval(heartsInterval);
+            showPage('page2');
+            heartsInterval = createHearts('hearts2');
+        }
+
+        function goToNoPage() {
+            showPage('noPage');
+            setTimeout(() => {
+                goToPage2();
+            }, 2000);
+        }
+
+        // Init
+        heartsInterval = createHearts('hearts1');
+        document.getElementById('herPhoto').src = 'HER_PICTURE_URL'; // Replace with her photo!
+    </script>
+</body>
+</html>
